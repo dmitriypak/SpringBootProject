@@ -1,2 +1,4 @@
-server:
-  port: 8090
+application:
+  type: csv
+  path: classpath:test_en.csv
+  localization: en
