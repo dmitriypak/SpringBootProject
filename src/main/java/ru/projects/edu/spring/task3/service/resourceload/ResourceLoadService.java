@@ -1,51 +1,28 @@
 package ru.projects.edu.spring.task3.service.resourceload;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ResourceLoaderAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
+import ru.projects.edu.spring.task3.config.Localize;
 
-@ConfigurationProperties("application")
-
-public class ResourceLoadService extends AbstractFactoryBean<LoadService> implements ResourceLoaderAware {
+@Configuration
+public class ResourceLoadService  implements ResourceLoaderAware {
   private ResourceLoader resourceLoader;
-  private final String type;
-  private final String path;
+  private final Localize localize;
 
-  public ResourceLoadService(String type, String path) {
-    this.type = type;
-    this.path = path;
+  public ResourceLoadService(Localize localize) {
+    this.localize = localize;
   }
 
-  public String getType() {
-    return type;
-  }
-
-  public String getPath() {
-    return path;
-  }
-
-
+  @Override
   public void setResourceLoader(ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
   }
 
-  @Override
-  public Class<?> getObjectType() {
-    return LoadService.class;
+  @Bean
+  public TestLoader testLoader(){
+    return new TestLoaderImpl(resourceLoader.getResource(localize.getPath()));
   }
 
-  @Override
-  protected LoadService createInstance() throws Exception {
-    switch (type.toLowerCase()){
-      case "csv":{
-        return new CSVReadServiceImpl(resourceLoader.getResource(path));
-      }
-      default:
-        throw new UnsupportedOperationException();
-    }
-  }
 }
