@@ -26,13 +26,13 @@ public class TestServiceImpl implements TestService{
   public void start(Test test) {
     student = test.getStudent();
     if(student==null){
-      ms.print("Студент не зарегистрирован");
+      ms.print(ms.getMessage("not_registered_student"));
       return;
     }
 
     listQuestions = test.getQuestionsList();
     if(listQuestions.size()==0){
-      ms.print("Тест не загружен");
+      ms.print(ms.getMessage("test_is_not_load"));
       return;
     }
 
