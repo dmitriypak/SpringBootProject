@@ -1,10 +1,11 @@
 package ru.projects.edu.spring.task3.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
 import java.util.Locale;
 
 @ConfigurationProperties("application")
-
 public class Localize {
   private Locale locale;
   private String path;
@@ -29,5 +30,13 @@ public class Localize {
 
   public void setLocale(Locale locale) {
     this.locale = locale;
+  }
+
+  public String getLocalization() {
+    return localization;
+  }
+
+  public void setLocalization(String localization) {
+    this.localization = localization;
   }
 }

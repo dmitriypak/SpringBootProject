@@ -10,7 +10,7 @@ import ru.projects.edu.spring.task3.service.testing.TestService;
 import java.io.IOException;
 
 @Service
-public class AppLauncher implements CommandLineRunner {
+public class AppLauncher {
   private final TestLoader testLoader;
   private final StudentService studentService;
   private final TestService testService;
@@ -24,11 +24,8 @@ public class AppLauncher implements CommandLineRunner {
   }
 
   public void start() throws IOException {
-    if(studentService.registerStudent() && testLoader.loadTest()){
+    if (studentService.registerStudent() && testLoader.loadTest()) {
       testService.start(testDao.getTest());
     }
   }
-  @Override
-  public void run(String... args) throws Exception {
-    this.start();
-  }}
+}

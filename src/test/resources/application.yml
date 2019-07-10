@@ -1,0 +1,4 @@
+application:
+  type: csv
+  path: classpath:test_en.csv
+  localization: en
